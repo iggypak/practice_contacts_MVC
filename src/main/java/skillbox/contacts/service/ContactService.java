@@ -1,5 +1,6 @@
 package skillbox.contacts.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import skillbox.contacts.dto.ContactDto;
 import skillbox.contacts.dto.DtoMapper;
@@ -7,6 +8,7 @@ import skillbox.contacts.repository.ContactRepository;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
+@Slf4j
 @Service
 public class ContactService {
     private static final String NOT_FOUND_MSG_FORMATTED = "Could not find contact with ID = %d";
@@ -39,6 +41,7 @@ public class ContactService {
     }
 
     public ContactDto createContact(ContactDto contactDto) {
+        log.info("Dto is: {}", contactDto);
         var savedContact = contactRepository.save(DtoMapper.toEntity(contactDto));
         return DtoMapper.toDto(savedContact);
     }

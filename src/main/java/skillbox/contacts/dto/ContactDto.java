@@ -1,4 +1,4 @@
 package skillbox.contacts.dto;
 
-public record ContactDto(String name, String phone) {
+public record ContactDto(Long id, String name, String phone) {
 }

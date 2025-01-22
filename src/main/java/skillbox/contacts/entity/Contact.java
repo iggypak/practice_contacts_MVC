@@ -27,4 +27,11 @@ public class Contact {
         this.createdAt = LocalDateTime.now();
     }
 
+    public Contact(Long id, String name, String phone){
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.createdAt = LocalDateTime.now();
+    }
+
 }

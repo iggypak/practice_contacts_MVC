@@ -29,7 +29,7 @@ public class ContactController {
     }
 
     @PostMapping
-    public ResponseEntity<ContactDto> createContact(ContactDto contactDto) {
+    public ResponseEntity<ContactDto> createContact(@RequestBody ContactDto contactDto) {
         return ResponseEntity.ok(contactService.createContact(contactDto));
     }
 
