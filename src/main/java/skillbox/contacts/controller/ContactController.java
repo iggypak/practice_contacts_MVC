@@ -2,13 +2,15 @@ package skillbox.contacts.controller;
 
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import skillbox.contacts.dto.ContactDto;
 import skillbox.contacts.service.ContactService;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/contacts")
 public class ContactController {
 
@@ -19,28 +21,38 @@ public class ContactController {
     }
 
     @GetMapping
-    public List<ContactDto> getAllContacts(){
-        return contactService.getAll();
+    public String getAllContacts(Model model) {
+        model.addAttribute("contacts", contactService.getAll());
+        return "contacts/list.html";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ContactDto> getContactById(@PathVariable Long id) {
-        return ResponseEntity.ok(contactService.getById(id));
+    @GetMapping("/create")
+    public String createContact(Model model) {
+        var contact = new ContactDto(null, null, null);
+        model.addAttribute("contact", contact);
+        return "contacts/edit";
     }
 
-    @PostMapping
-    public ResponseEntity<ContactDto> createContact(@RequestBody ContactDto contactDto) {
-        return ResponseEntity.ok(contactService.createContact(contactDto));
+    @GetMapping("/edit/{id}")
+    public String editContactList(@PathVariable Long id, Model model) {
+        var contact = contactService.getById(id);
+        model.addAttribute("contact", contact);
+        return "contacts/edit";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ContactDto> updateContact(@PathVariable Long id, ContactDto contactDto) {
-        return ResponseEntity.ok(contactService.updateContact(id, contactDto));
+    @PostMapping("/save")
+    public String saveContact(@ModelAttribute ContactDto contactDto) {
+        if(contactDto.id() == null) {
+            contactService.createContact(contactDto);
+        } else {
+            contactService.updateContact(contactDto.id(), contactDto);
+        }
+        return "redirect:/contacts";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteContact(@PathVariable Long id) {
+    @PostMapping("/delete/{id}")
+    public String deleteContact(@PathVariable Long id) {
         contactService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return "redirect:/contacts";
     }
 }
