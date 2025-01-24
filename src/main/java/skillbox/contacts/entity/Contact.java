@@ -34,4 +34,6 @@ public class Contact {
         this.createdAt = LocalDateTime.now();
     }
 
+    public Contact(long id, String name, String phone, LocalDateTime createdAt) {
+    }
 }
