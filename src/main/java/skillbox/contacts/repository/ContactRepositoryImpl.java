@@ -13,9 +13,12 @@ public class ContactRepositoryImpl implements ContactRepository{
 
     private final static String SQL_FIND_ALL = "SELECT * FROM contacts";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM contacts WHERE id = ?";
-    private final static String SQL_CREATE = "INSERT INTO contacts(name, phone) VALUES(?, ?) RETURNING id";
+    private final static String SQL_CREATE = "INSERT INTO contacts(first_name, last_name, email, phone) VALUES(?, ?, ?, ?) " +
+            "RETURNING id";
     private final static String SQL_DELETE = "DELETE FROM contacts WHERE id = ?";
-    private final static String SQL_UPDATE = "UPDATE contacts SET name = ?, phone = ? WHERE id = ?";
+    private final static String SQL_UPDATE = "UPDATE contacts " +
+            "SET first_name = ?, last_name = ?, email = ?, phone = ? " +
+            "WHERE id = ?";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -25,7 +28,9 @@ public class ContactRepositoryImpl implements ContactRepository{
 
     private final RowMapper<Contact> contactRowMapper = (rs, rowNum) -> new Contact(
             rs.getLong("id"),
-            rs.getString("name"),
+            rs.getString("first_name"),
+            rs.getString("last_name"),
+            rs.getString("email"),
             rs.getString("phone")
     );
 
@@ -50,14 +55,18 @@ public class ContactRepositoryImpl implements ContactRepository{
             Long id = jdbcTemplate.queryForObject(
                     SQL_CREATE,
                     Long.class,
-                    contact.getName(),
+                    contact.getFirstName(),
+                    contact.getLastName(),
+                    contact.getEmail(),
                     contact.getPhone()
             );
             contact.setId(id);
         } else {
             jdbcTemplate.update(
                     SQL_UPDATE,
-                    contact.getName(),
+                    contact.getFirstName(),
+                    contact.getLastName(),
+                    contact.getEmail(),
                     contact.getPhone(),
                     contact.getId()
             );

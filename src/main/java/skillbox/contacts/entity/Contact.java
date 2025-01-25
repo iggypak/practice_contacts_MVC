@@ -15,25 +15,22 @@ public class Contact {
     @Id
     private Long id;
 
-    private String name;
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
 
     private String phone;
 
     private LocalDateTime createdAt;
 
-    public Contact(String name, String phone){
-        this.name = name;
-        this.phone = phone;
-        this.createdAt = LocalDateTime.now();
-    }
-
-    public Contact(Long id, String name, String phone){
+    public Contact(Long id, String firstName, String lastName, String email, String phone) {
         this.id = id;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.phone = phone;
         this.createdAt = LocalDateTime.now();
-    }
-
-    public Contact(long id, String name, String phone, LocalDateTime createdAt) {
     }
 }

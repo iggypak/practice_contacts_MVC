@@ -1,1 +1,1 @@
-INSERT INTO contacts(name, phone) VALUES('Иван Петрович', '7-999-999-99-99')
+INSERT INTO contacts(first_name, last_name, email, phone) VALUES('Александр г', 'Дугин', 'arma@ged.don', '7-666-13-13-13')

@@ -1,14 +1,11 @@
 package skillbox.contacts.controller;
 
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import skillbox.contacts.dto.ContactDto;
 import skillbox.contacts.service.ContactService;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/contacts")
@@ -28,7 +25,7 @@ public class ContactController {
 
     @GetMapping("/create")
     public String createContact(Model model) {
-        var contact = new ContactDto(null, null, null);
+        var contact = new ContactDto(null, null, null, null, null);
         model.addAttribute("contact", contact);
         return "contacts/edit";
     }
